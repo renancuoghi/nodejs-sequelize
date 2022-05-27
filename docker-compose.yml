@@ -1,0 +1,56 @@
+version: '3.7'
+
+services:
+  mysqlnode:  
+    image: mysql:5.7
+    container_name: mysqlnode
+    hostname: mysqlnode
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+      - MYSQL_DATABASE=appdb
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:3308:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    secrets:
+      - db_root_password
+      - db_password
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - mysqlnode
+    environment:
+      PMA_HOST: mysqlnode
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8099:80
+  appnode:
+    build: ./rest-api
+    container_name: appnode
+    hostname: appnode
+    restart: unless-stopped
+    volumes:
+      - ./rest-api:/home/node/app/
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysqlnode
+
+secrets:
+  db_root_password:
+    file: db_root_password.txt
+  db_password:
+    file: db_password.txt
+
+volumes:
+  mysql-data:
+
+networks:
+  default:

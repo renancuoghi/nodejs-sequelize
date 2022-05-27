@@ -1,0 +1,12 @@
+{
+    "port" : 5000,
+    "db" : {
+        "mysql" : {
+            "host" : "mysqlnode",
+            "database" : "appdb",
+            "user" : "user",
+            "password" : "user",
+            "dialect" : "mysql"
+        }
+    }
+}
