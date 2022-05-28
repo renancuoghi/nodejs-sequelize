@@ -5,9 +5,15 @@ const database = require('./config/database');
 const app = express();
 const port = config.port;
 const userRoute = require('./routes/user');
-// const User = require('./model/user');
+
 const roleRoute = require('./routes/role');
-// const Role = require('./model/role');
+
+const cors = require('cors');
+
+const corsOption = {
+    origin: '*',
+    optionsSuccessStatus: 200,
+};
 
 /**
  * Sync database
@@ -22,6 +28,7 @@ const roleRoute = require('./routes/role');
         console.log(error);
     }
 })();
+app.use(cors(corsOption));
 app.use(bodyParser.json());
 app.use(userRoute);
 app.use(roleRoute);
