@@ -42,6 +42,17 @@ services:
       - "5000:5000"
     depends_on:
       - mysqlnode
+  appfront:
+    build: ./react-frontend
+    container_name: appfront
+    hostname: appfront
+    restart: unless-stopped
+    volumes:
+      - ./react-frontend:/home/node/app/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - appnode
 
 secrets:
   db_root_password:

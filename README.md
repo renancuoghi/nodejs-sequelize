@@ -18,9 +18,16 @@ Phpmyadmin: localhost:8099
 ```
 
 ## Application
+
+## Frontend react
+
+Just access on http://localhost:3000, if you want to run without docker just npm start. But didn't forget to stop frontend container. 
+
+## Backend Nodejs
+
 Application container is running with nodemon, so all changes will update into container.
 ```bash
-URL: HTTP://localhost:5000
+URL: http://localhost:5000
 # Root path will try to connect to database and sync database.
 ```
 ## Role routes
