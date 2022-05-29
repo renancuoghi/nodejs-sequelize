@@ -6,13 +6,17 @@ const router = express.Router();
 
 
 router.post('/user/list',  async (req, res) => {
-    const query =  (req.query.filter) ? req.query.filter : {};
-    const limit =  (req.query.limit) ? req.query.limit : 10;
-    const offset =  (req.query.offset) ? req.query.offset : 0;
+    const json = req.body;
+    const query =  (json.filter) ? json.filter : {};
+    const limit =  (json.limit) ? json.limit : 10;
+    const offset =  ((json.offset) ? json.offset : 0) * limit;
+    const order = (json.order) ? json.order : [['id', 'ASC']];
+
     const queryObj = { 
         where: query, 
         offset: offset, 
         limit: limit,
+        order: order,
         include : [
             { model: Role }
         ]

@@ -8,6 +8,9 @@ const request = {
       body: JSON.stringify(object)
     };
     return fetch(url, requestOptions);
+  },
+  get: (url) => {
+    return fetch(url);
   }
 };
 
